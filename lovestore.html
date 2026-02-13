@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day 2025</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.cdnfonts.com/css/segoe-ui-4" rel="stylesheet">
+  <style>
+    /* CSS Reset and Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #fff5f5, #ffe5e5);
+      min-height: 100vh;
+    }
+
+    /* Header Styles */
+    .header {
+      text-align: center;
+      padding: 4rem 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .heart-icon {
+      color: #ff4d6d;
+      font-size: 3rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    .header h1 {
+      color: #ff4d6d;
+      font-size: 2.5rem;
+      margin: 1rem 0;
+    }
+
+    .header p {
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Features Section */
+    .features {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 1rem;
+      text-align: center;
+      transition: transform 0.3s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-card i {
+      color: #ff4d6d;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      color: #666;
+    }
+
+    /* Products Section */
+    .products {
+      max-width: 1200px;
+      margin: 4rem auto;
+      padding: 0 1rem;
+    }
+
+    .products h2 {
+      text-align: center;
+      color: #ff4d6d;
+      margin-bottom: 2rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 1rem;
+    }
+
+    .product-info h3 {
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .price {
+      color: #ff4d6d;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: #ff4d6d;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #ff3366;
+    }
+
+    /* Newsletter Section */
+    .newsletter {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      padding: 4rem 1rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .newsletter h2 {
+      color: #ff4d6d;
+      margin-bottom: 1rem;
+    }
+
+    .newsletter-form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      gap: 1rem;
+      padding: 0 1rem;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid #ffc2c2;
+      border-radius: 0.5rem;
+      outline: none;
+    }
+
+    .newsletter-form input:focus {
+      border-color: #ff4d6d;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .newsletter-form {
+        flex-direction: column;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <i class="fas fa-heart heart-icon"></i>
+    <h1>Celebrate Love Together</h1>
+    <p>Make this Valentine's Day unforgettable with our special collection of gifts and experiences</p>
+  </header>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature-card">
+      <i class="fas fa-gift"></i>
+      <h3>Perfect Gifts</h3>
+      <p>Discover our curated selection of romantic gifts perfect for expressing your love</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-calendar"></i>
+      <h3>Special Events</h3>
+      <p>Book romantic dinner reservations and special Valentine's Day experiences</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-paper-plane"></i>
+      <h3>Express Love</h3>
+      <p>Send heartfelt messages and create lasting memories with your loved ones</p>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products">
+    <h2>Valentine's Special Collection</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="images/pexels-fmaderebner-340566.jpg" alt="Romantic Gift Box">
+        <div class="product-info">
+          <h3>Romantic Gift Box</h3>
+          <p>Special curated gift box with chocolates and more</p>
+          <p class="price">$49.99</p>
+          <button class="btn" onclick="openModal('gift-box')">Order Now</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/pexels-nurseryart-348520.jpg" alt="Rose Bouquet">
+        <div class="product-info">
+          <h3>Premium Rose Bouquet</h3>
+          <p>Fresh red roses arranged with love</p>
+          <p class="price">$79.99</p>
+          <button class="btn" onclick="openModal('roses')">Order Now</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/pexels-pengwhan-1767434.jpg" alt="Dinner Package">
+        <div class="product-info">
+          <h3>Romantic Dinner Package</h3>
+          <p>Complete dinner experience for two</p>
+          <p class="price">$149.99</p>
+          <button class="btn" onclick="openModal('dinner')">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter">
+    <h2>Stay Updated with Love</h2>
+    <form class="newsletter-form" onsubmit="submitNewsletter(event)">
+      <input type="email" placeholder="Enter your email" required>
+      <button type="submit" class="btn">Subscribe</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Made with <i class="fas fa-heart" style="color: #ff4d6d;"></i> for Valentine's Day 2025</p>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal" id="orderModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle">Order Now</h2>
+      <form id="orderForm" onsubmit="submitOrder(event)">
+        <div style="margin-bottom: 1rem;">
+          <label for="name" style="display: block; margin-bottom: 0.5rem;">Name:</label>
+          <input type="text" id="name" required style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.5rem;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label for="email" style="display: block; margin-bottom: 0.5rem;">Email:</label>
+          <input type="email" id="email" required style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.5rem;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label for="phone" style="display: block; margin-bottom: 0.5rem;">Phone:</label>
+          <input type="tel" id="phone" required style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.5rem;">
+        </div>
+        <button type="submit" class="btn" style="width: 100%;">Confirm Order</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Modal Functions
+    function openModal(productType) {
+      const modal = document.getElementById('orderModal');
+      const modalTitle = document.getElementById('modalTitle');
+      modal.style.display = 'flex';
+
+      switch (productType) {
+        case 'gift-box':
+          modalTitle.textContent = 'Order Romantic Gift Box';
+          break;
+        case 'roses':
+          modalTitle.textContent = 'Order Premium Rose Bouquet';
+          break;
+        case 'dinner':
+          modalTitle.textContent = 'Book Romantic Dinner Package';
+          break;
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('orderModal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('orderModal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+
+    // Form Submissions
+    function submitNewsletter(event) {
+      event.preventDefault();
+      const email = event.target.querySelector('input[type="email"]').value;
+      alert(`Thank you for subscribing! We'll send updates to ${email}`);
+      event.target.reset();
+    }
+
+    function submitOrder(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+
+      alert(`Order received!\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nWe'll contact you soon to confirm your order.`);
+      closeModal();
+      event.target.reset();
+    }
+  </script>
+</body>
+
+</html>

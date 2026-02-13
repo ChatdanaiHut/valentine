@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Gallery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.cdnfonts.com/css/segoe-ui-4" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffe5e5 0%, #ffd1d1 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    /* Header Styles */
+    .header {
+      text-align: center;
+      padding: 2rem 0 4rem;
+    }
+
+    .header h1 {
+      color: #ff4d6d;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .love-message {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Gallery Grid */
+    .gallery {
+      max-width: 1400px;
+      margin: 0 auto;
+      columns: 3;
+      column-gap: 1.5rem;
+    }
+
+    @media (max-width: 1200px) {
+      .gallery {
+        columns: 2;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gallery {
+        columns: 1;
+      }
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 1.5rem;
+      position: relative;
+      border-radius: 1rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 1rem;
+    }
+
+    .gallery-item .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      padding: 2rem 1rem 1rem;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .overlay {
+      opacity: 1;
+    }
+
+    .love-quote {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      font-style: italic;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      padding: 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90vh;
+      position: relative;
+    }
+
+    .modal-image {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 1rem;
+    }
+
+    .modal-quote {
+      color: white;
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-style: italic;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -2rem;
+      right: -2rem;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    /* Floating Hearts */
+    .floating-hearts {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 1rem;
+      color: #ff4d6d;
+      opacity: 0.6;
+      animation: float 6s ease-in infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Add new audio control styles */
+    .audio-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .audio-controls button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #ff4d6d;
+      font-size: 1.5rem;
+      padding: 8px;
+      transition: all 0.3s ease;
+      border-radius: 50%;
+    }
+
+    .audio-controls button:hover {
+      background: rgba(255, 77, 109, 0.1);
+      transform: scale(1.1);
+    }
+
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .volume-slider {
+      width: 80px;
+      height: 4px;
+      -webkit-appearance: none;
+      background: #ffb3c0;
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      background: #ff4d6d;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    .now-playing {
+      color: #666;
+      font-size: 0.9rem;
+      margin-right: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .audio-player {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        padding: 10px;
+      }
+
+      .volume-control {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Floating Hearts Background -->
+  <div class="floating-hearts" id="heartsContainer"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <h1>Love Gallery <i class="fas fa-heart"></i></h1>
+    <p class="love-message">อยู่กันมานานละเหมือนกันนะเบ้บบบ ไว้หารูปมาเติมกันนะ
+    </p>
+  </header>
+
+  <!-- Gallery -->
+  <div class="gallery">
+    <div class="gallery-item" onclick="openModal(0)">
+      <img src="images/LINE_ALBUM_คนน่ารัก_260212_3.jpg" alt="Romantic moment 1">
+      <div class="overlay">
+        <p class="love-quote">ไว้ไปซ้ำกันนะ.</p>
+      </div>
+    </div>
+    <div class="gallery-item" onclick="openModal(1)">
+      <img src="images/LINE_ALBUM_คนน่ารัก_260212_1.jpg" alt="Romantic moment 2">
+      <div class="overlay">
+        <p class="love-quote">หน้ากระนูนนี่แหละ เราจะได้ตัวเล็กๆ</p>
+      </div>
+    </div>
+    <div class="gallery-item" onclick="openModal(2)">
+      <img src="images/1713105756267.jpg" alt="Romantic moment 3">
+      <div class="overlay">
+        <p class="love-quote">เนียนใสไร้สิว</p>
+      </div>
+    </div>
+    <div class="gallery-item" onclick="openModal(3)">
+      <img src="images/1710610215935.jpg" alt="Romantic moment 4">
+      <div class="overlay">
+        <p class="love-quote">ยังไม่ได้ไปเติมรูปเพิ่มเลอ</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="imageModal" onclick="closeModal()">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <img class="modal-image" id="modalImage" src="" alt="Full size image">
+      <p class="modal-quote" id="modalQuote"></p>
+    </div>
+  </div>
+
+  <!-- Add audio player -->
+  <audio id="bgMusic" loop>
+    <source src="songs/สิงโต นำโชค เธอคือของขวัญ Official MV.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="audio-player">
+    <span class="now-playing">♫เธอคือของขวัญ</span>
+    <div class="audio-controls">
+      <button onclick="togglePlay()" id="playPauseBtn">
+        <i class="fas fa-play"></i>
+      </button>
+      <div class="volume-control">
+        <button onclick="toggleMute()" id="muteBtn">
+          <i class="fas fa-volume-up"></i>
+        </button>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Love quotes array
+    const loveQuotes = [
+      "In your eyes, I found my home.",
+      "Every love story is beautiful, but ours is my favorite.",
+      "You're the missing piece to my puzzle.",
+      "With you, every day feels like Valentine's Day.",
+      "You make my heart smile.",
+      "Forever isn't long enough with you.",
+      "You are my today and all of my tomorrows."
+    ];
+
+    // Modal functions
+    function openModal(index) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      const modalQuote = document.getElementById('modalQuote');
+      const galleryItems = document.querySelectorAll('.gallery-item img');
+
+      modalImg.src = galleryItems[index].src;
+      modalQuote.textContent = loveQuotes[index];
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+
+    // Floating hearts animation
+    function createHeart() {
+      const heart = document.createElement('i');
+      heart.classList.add('fas', 'fa-heart', 'heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+      heart.style.fontSize = Math.random() * 1 + 0.5 + 'rem';
+
+      document.getElementById('heartsContainer').appendChild(heart);
+
+      // Remove heart after animation
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    // Create hearts periodically
+    setInterval(createHeart, 300);
+
+    // Stop modal propagation
+    document.querySelector('.modal-content').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    // Add audio control functions
+    const audio = document.getElementById('bgMusic');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+    let isPlaying = false;
+
+    // Initialize audio settings
+    audio.volume = volumeSlider.value;
+
+    function togglePlay() {
+      if (isPlaying) {
+        audio.pause();
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+      } else {
+        audio.play()
+          .then(() => {
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+          })
+          .catch(error => {
+            console.error("Audio playback failed:", error);
+          });
+      }
+      isPlaying = !isPlaying;
+    }
+
+    function toggleMute() {
+      audio.muted = !audio.muted;
+      muteBtn.innerHTML = audio.muted ?
+        '<i class="fas fa-volume-mute"></i>' :
+        '<i class="fas fa-volume-up"></i>';
+    }
+
+    volumeSlider.addEventListener('input', (e) => {
+      audio.volume = e.target.value;
+      if (audio.muted) toggleMute();
+    });
+
+    // Auto-play when user interacts with page
+    document.body.addEventListener('click', function initAudio() {
+      if (!isPlaying) {
+        togglePlay();
+        document.body.removeEventListener('click', initAudio);
+      }
+    }, {once: true});
+
+    // Handle visibility change
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && isPlaying) {
+        togglePlay();
+      }
+    });
+  </script>
+</body>
+
+</html>
